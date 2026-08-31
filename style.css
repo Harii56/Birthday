@@ -1,0 +1,420 @@
+:root {
+    --maroon: #58111A;
+    --deep-maroon: #2C070C;
+    --olive: #556B2F;
+    --olive-light: #708238;
+    --pink: #F8BBD0;
+    --soft-pink: #FFF0F5;
+    --glass-bg: rgba(44, 7, 12, 0.78);
+    --glass-border: rgba(248, 187, 208, 0.3);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: radial-gradient(circle at center, #4d0e17, var(--deep-maroon), #120204);
+    min-height: 100vh;
+    color: var(--soft-pink);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#bg-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Floating Audio Button */
+.music-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: rgba(44, 7, 12, 0.85);
+    border: 1px solid var(--pink);
+    color: var(--pink);
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 99;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    transition: transform 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.music-btn.playing { animation: rotateMusic 4s linear infinite; }
+@keyframes rotateMusic { 100% { transform: rotate(360deg); } }
+
+/* Floating Balloons */
+.balloon-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.balloon {
+    position: absolute;
+    bottom: -120px;
+    width: 45px;
+    height: 60px;
+    border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+    animation: floatUp 10s infinite linear;
+}
+
+.balloon::after {
+    content: "";
+    position: absolute;
+    bottom: -12px;
+    left: 21px;
+    width: 2px;
+    height: 14px;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.balloon.maroon { background: var(--maroon); left: 10%; animation-duration: 8s; }
+.balloon.olive { background: var(--olive); left: 32%; animation-duration: 11s; animation-delay: 2s; }
+.balloon.pink { background: var(--pink); left: 58%; animation-duration: 9s; animation-delay: 1s; }
+.balloon.maroon { background: #7c1926; left: 82%; animation-duration: 12s; }
+
+@keyframes floatUp {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+    100% { transform: translateY(-120vh) rotate(20deg); opacity: 0; }
+}
+
+/* Screen Section Animation */
+.screen-section {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+    opacity: 0;
+    transform: scale(0.95) translateY(20px);
+    pointer-events: none;
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.screen-section.active {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    pointer-events: all;
+}
+
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 25px 20px;
+    width: 92%;
+    max-width: 480px;
+    text-align: center;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+}
+
+.heading {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    color: var(--pink);
+    margin-bottom: 6px;
+}
+
+.glow-title {
+    text-shadow: 0 0 15px rgba(248, 187, 208, 0.6), 0 0 30px rgba(212, 175, 55, 0.4);
+}
+
+.subtitle {
+    font-size: 0.9rem;
+    color: rgba(255, 240, 245, 0.85);
+    margin-bottom: 15px;
+}
+
+.badge {
+    display: inline-block;
+    background: rgba(85, 107, 47, 0.4);
+    border: 1px solid var(--olive-light);
+    color: var(--pink);
+    font-size: 0.75rem;
+    padding: 4px 12px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+}
+
+.input-group { display: flex; flex-direction: column; gap: 12px; }
+
+input[type="date"] {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--glass-border);
+    padding: 12px;
+    border-radius: 12px;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+}
+
+.btn-glow {
+    background: linear-gradient(135deg, var(--olive-light), var(--maroon));
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    padding: 12px 24px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+}
+
+.btn-glow:hover { transform: translateY(-2px); }
+.hidden-btn { display: none; margin-top: 15px; }
+.pulse-btn { animation: pulse 1.6s infinite; }
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+}
+
+.error { color: #ff6b6b; margin-top: 10px; font-size: 0.85rem; }
+
+/* Real Cake Overlay Flames */
+.real-cake-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+}
+
+.cake-img { width: 100%; height: auto; display: block; }
+
+.flame-target {
+    position: absolute;
+    width: 24px;
+    height: 35px;
+    cursor: pointer;
+    transform: translate(-50%, -100%);
+    z-index: 10;
+}
+
+.f1 { top: 14%; left: 40.3%; }
+.f2 { top: 9%;  left: 44.3%; }
+.f3 { top: 5%;  left: 51.4%; }
+.f4 { top: 9.5%; left: 59.0%; }
+.f5 { top: 14.5%; left: 63.0%; }
+
+.flame {
+    width: 13px;
+    height: 22px;
+    background: radial-gradient(ellipse at bottom, #ffffff 0%, #fff7aa 25%, #ff9800 65%, transparent 100%);
+    border-radius: 50% 50% 20% 20%;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    box-shadow: 0 0 14px #ffeb3b, 0 0 28px #ff9800;
+    animation: flicker 0.12s infinite alternate;
+}
+
+.smoke {
+    position: absolute;
+    top: -5px;
+    left: 7px;
+    width: 6px;
+    height: 15px;
+    background: rgba(220, 220, 220, 0.7);
+    border-radius: 50%;
+    filter: blur(2px);
+    opacity: 0;
+}
+
+.flame-target.out .flame { display: none; }
+.flame-target.out .smoke { animation: smokeUp 1s ease-out; }
+
+@keyframes flicker {
+    0% { transform: scale(1) rotate(-3deg); }
+    100% { transform: scale(1.15) rotate(3deg); }
+}
+
+@keyframes smokeUp {
+    0% { opacity: 0.8; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(-30px) scale(2.2); }
+}
+
+/* Envelope Screen */
+.envelope-container { width: 240px; margin: 15px auto; cursor: pointer; transition: transform 0.3s; }
+.envelope-container:hover { transform: scale(1.05); }
+.envelope-img { width: 100%; border-radius: 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
+
+/* Stylish Dark Glass Letter Card (Image 10 Exact Style) */
+.stylish-letter-card {
+    background: rgba(35, 7, 12, 0.88);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 35px 28px;
+    width: 92%;
+    max-width: 480px;
+    text-align: center;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+}
+
+.letter-title {
+    font-family: 'Caveat', cursive;
+    font-size: 2.8rem;
+    color: var(--pink);
+    margin-bottom: 18px;
+}
+
+.scroll-letter {
+    text-align: center;
+    line-height: 1.8;
+    font-size: 1rem;
+    color: rgba(255, 240, 245, 0.9);
+}
+
+.scroll-letter p { margin-bottom: 15px; }
+
+.highlight {
+    background: rgba(248, 187, 208, 0.2);
+    border-bottom: 2px solid var(--pink);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.letter-footer {
+    margin-top: 25px;
+    border-top: 1px dashed rgba(248, 187, 208, 0.2);
+    padding-top: 15px;
+}
+
+.sign-off {
+    font-family: 'Caveat', cursive;
+    font-size: 2.2rem;
+    color: var(--pink);
+    margin-bottom: 12px;
+}
+
+.next-prompt {
+    font-size: 0.85rem;
+    color: rgba(255, 240, 245, 0.7);
+    margin-bottom: 14px;
+    font-style: italic;
+}
+
+/* PAGE 5: Why You're Special Grid Card */
+.grid-container-card {
+    background: rgba(35, 7, 12, 0.88);
+   -webkit-backdrop-filter:blur(25px);  
+    backdrop-filter: blur(25px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 25px 20px;
+    width: 95%;
+    max-width: 520px;
+    text-align: center;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+}
+
+.grid-header-badge {
+    background: rgba(248, 187, 208, 0.12);
+    border: 1px solid var(--glass-border);
+    padding: 12px 18px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+}
+
+.grid-header-badge h2 {
+    font-family: 'Caveat', cursive;
+    font-size: 2.2rem;
+    color: var(--pink);
+}
+
+.grid-header-badge p {
+    font-size: 0.8rem;
+    color: rgba(255, 240, 245, 0.75);
+}
+
+/* 3x3 Card Grid Setup */
+.reason-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.flip-card {
+    background-color: transparent;
+    height: 95px;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+.flip-card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* Front Cover (Question Mark State) */
+.card-front {
+    background: linear-gradient(135deg, rgba(85, 107, 47, 0.4), rgba(88, 17, 26, 0.6));
+    border: 1px solid var(--glass-border);
+    color: var(--pink);
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Back Cover (Revealed Message State) */
+.card-back {
+    background: linear-gradient(135deg, rgba(248, 187, 208, 0.25), rgba(112, 130, 56, 0.4));
+    border: 1px solid var(--pink);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.3;
+    transform: rotateY(180deg);
+}

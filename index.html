@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Aroosha! 🎂✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Cinzel:wght@600&family=Plus+Jakarta+Sans:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="balloon-container">
+        <div class="balloon maroon"></div>
+        <div class="balloon olive"></div>
+        <div class="balloon pink"></div>
+        <div class="balloon maroon"></div>
+        <div class="balloon pink"></div>
+    </div>
+
+    <!-- Audio Player & Floating Button -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="audio/music.mp3" type="audio/mp3">
+    </audio>
+    <button id="music-toggle-btn" class="music-btn" onclick="toggleMusic()">🎵</button>
+
+    <!-- PAGE 1: DOB Gate -->
+    <section id="dob-section" class="screen-section active">
+        <div class="glass-card">
+            <div class="badge">🔒 Special Access</div>
+            <h1 class="heading">Aroosha's Portal ✨</h1>
+            <p class="subtitle">Enter your date of birth to reveal the surprise 🎉</p>
+            
+            <div class="input-group">
+                <input type="date" id="dob-input" value="2004-09-03">
+                <button onclick="checkDOB()" class="btn-glow">Unlock Surprise 🗝️</button>
+            </div>
+            <p id="error-msg" class="error"></p>
+        </div>
+    </section>
+
+    <!-- PAGE 2: Real Cake & Exact Candle Flames -->
+    <section id="cake-section" class="screen-section">
+        <div class="glass-card cake-card">
+            <h1 class="heading glow-title">Aroosha's Special Day! 🎂💫</h1>
+            <p class="subtitle" id="cake-prompt">Tap all 5 glowing flames to blow them out! 🕯️</p>
+            
+            <div class="real-cake-wrapper">
+                <img src="image/cake.jpg" alt="Aroosha Birthday Cake" class="cake-img">
+                
+                <div class="flame-target f1" onclick="blowCandle(this)"><div class="flame"></div><div class="smoke"></div></div>
+                <div class="flame-target f2" onclick="blowCandle(this)"><div class="flame"></div><div class="smoke"></div></div>
+                <div class="flame-target f3" onclick="blowCandle(this)"><div class="flame"></div><div class="smoke"></div></div>
+                <div class="flame-target f4" onclick="blowCandle(this)"><div class="flame"></div><div class="smoke"></div></div>
+                <div class="flame-target f5" onclick="blowCandle(this)"><div class="flame"></div><div class="smoke"></div></div>
+            </div>
+
+            <button id="next-page-btn" class="btn-glow pulse-btn hidden-btn" onclick="goToEnvelopePage()">
+                Proceed to Your Letter ✉️✨
+            </button>
+        </div>
+    </section>
+
+    <!-- PAGE 3: Envelope Reveal -->
+    <section id="envelope-section" class="screen-section">
+        <div class="glass-card envelope-card">
+            <h1 class="heading">A Letter, Just For You 💌</h1>
+            <p class="subtitle">Tap the envelope to unseal your birthday message 👇</p>
+            
+            <div class="envelope-container" onclick="openLetter()">
+                <img src="image/envelop.jpg" alt="Sealed Envelope" class="envelope-img">
+            </div>
+        </div>
+    </section>
+
+    <!-- PAGE 4: Dark Aesthetics Letter (Image 10 Style) -->
+    <section id="message-section" class="screen-section">
+        <div class="stylish-letter-card">
+            <h1 class="letter-title">My Dearest, ❤️</h1>
+            
+            <div class="scroll-letter">
+                <p>On your special day, I just want to remind you how <span class="highlight">beautifully special</span> you are — not only today, but every single day. 🌸</p>
+                
+                <p>You make ordinary moments feel like <em>something out of a dream.</em> ✨</p>
+                
+                <p>I pray this year brings you <span class="highlight">endless happiness</span>, the <span class="highlight">success</span> you have quietly worked for, <span class="highlight">good health</span>, and a future as warm and bright as your smile. 💖</p>
+                
+                <p>Thank you for existing, for your kindness, and for every laugh you've given to the world. 🥰</p>
+            </div>
+
+            <div class="letter-footer">
+                <h2 class="sign-off">Happy Birthday 🎂💖</h2>
+                <p class="next-prompt">There's still one more thing... ❤️</p>
+                <button class="btn-glow pulse-btn" onclick="goToGridPage()">Continue ➔</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAGE 5: Why You're Special Interactive Grid (Image 9 & 11 Style) -->
+    <section id="grid-section" class="screen-section">
+        <div class="grid-container-card">
+            <div class="grid-header-badge">
+                <h2>Why You're Special 🎂✨</h2>
+                <p>Click on the cards to reveal why you're the best! 👇</p>
+            </div>
+
+            <div class="reason-grid">
+                <div class="flip-card" onclick="flipCard(this)">
+                    <div class="card-inner">
+                        <div class="card-front">❓</div>
+                        <div class="card-back">🎉 You make every day feel like a celebration</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="flipCard(this)">
+                    <div class="card-inner">
+                        <div class="card-front">❓</div>
+                        <div class="card-back">👄 Your laugh is my favorite sound</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="flipCard(this)">
+                    <div class="card-inner">
+                        <div class="card-front">❓</div>
+                        <div class="card-back">💖 The way you care unconditionally</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="flipCard(this)">
+                    <div class="card-inner">
+                        <div class="card-front">❓</div>
+                        <div class="card-back">⭐ You shine brighter than anyone</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="flipCard(this)">
+                    <div class="card-inner">
+                        <div class="card-front">❓</div>
+                        <div class="card-back">✨ You are Best in every way</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="flipCard(this)">
+                    <div class="card-inner">
+                        <div class="card-front">❓</div>
+                        <div class="card-back">🎨 Your creative and artistic soul</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="flipCard(this)">
+                    <div class="card-inner">
+                        <div class="card-front">❓</div>
+                        <div class="card-back">💪 Your strength and resilience inspire me</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="flipCard(this)">
+                    <div class="card-inner">
+                        <div class="card-front">❓</div>
+                        <div class="card-back">🌹 Your beauty inside and out</div>
+                    </div>
+                </div>
+                <div class="flip-card" onclick="flipCard(this)">
+                    <div class="card-inner">
+                        <div class="card-front">❓</div>
+                        <div class="card-back">🔥 you are a great person. ❤️</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
